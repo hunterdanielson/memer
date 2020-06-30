@@ -59,4 +59,19 @@ describe('memer routes', () => {
       .get(`/api/v1/memes/${meme._id}`)
       .then(res => expect(res.body).toEqual(meme));
   });
+
+  it('will update a meme by id via PATCH', async() => {
+    const meme = prepare(await Meme.findOne());
+    return request(app)
+      .patch(`/api/v1/memes/${meme._id}`)
+      .send({ image: 'pic.png' })
+      .then(res => expect(res.body).toEqual({ ...meme, image: 'pic.png' }));
+  });
+
+  it('will delete a meme by id via DELETE', async() => {
+    const meme = prepare(await Meme.findOne());
+    return request(app)
+      .delete(`/api/v1/memes/${meme._id}`)
+      .then(res => expect(res.body).toEqual(meme));
+  });
 });
