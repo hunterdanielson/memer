@@ -39,11 +39,17 @@ describe('animals routes', () => {
         expect(res.body).toEqual({
           name: 'cat',
           image: 'cat.png',
-          appendages: '4',
+          appendages: 4,
           _id: expect.anything(),
           __v: 0
         });
       });
   });
 
+  it('will get all animals via GET', async() => {
+    const allAnimals = prepare(await Animal.find());
+    return request(app)
+      .get('/api/v1/animals')
+      .then(res => expect(res.body).toEqual(allAnimals));
+  });
 });
